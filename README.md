@@ -6,6 +6,7 @@ npm i cors
 npm install dotenv
 npm i express
 npm i joi
+npm install jsonwebtoken
 npm i mongoose
 npm install morgan
 npm i nanoid
