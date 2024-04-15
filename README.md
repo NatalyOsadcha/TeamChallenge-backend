@@ -26,15 +26,16 @@ example request:
 {
 "name": "User User",
 "email": "user@gmail.com",
+"phone": "+00(000)000-00-00",
 "password": "userpass"
 }
 
 response:
-{
+
 "user": {
 "name": "User User",
-"email": "user@gmail.com"
-}
+"email": "user@gmail.com",
+"phone": "+00(000)000-00-00"
 }
 
 POST /api/users/register 201 54 - 211.746 ms

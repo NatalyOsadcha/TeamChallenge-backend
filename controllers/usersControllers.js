@@ -12,7 +12,7 @@ export const registerUser = ctrlWrapper(async (req, res) => {
         res.status(400).json({ message: error.message });
         return;
     }
-    const { name, email, password } = req.body;
+    const { name, email, phone, password } = req.body;
 
 
     const existingUser = await userServices.findUser({ email });
@@ -26,6 +26,7 @@ export const registerUser = ctrlWrapper(async (req, res) => {
     const newUser = await userServices.signup({
         name,
         email,
+        phone,
         password: hashedPassword,
         verificationToken,
     });
@@ -34,6 +35,7 @@ export const registerUser = ctrlWrapper(async (req, res) => {
         user: {
             name: newUser.name,
             email: newUser.email,
+            phone: newUser.phone,
         }
     });
 });

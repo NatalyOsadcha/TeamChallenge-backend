@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Name is required'],
         unique: true,
     },
+    phone: {
+        type: String,
+        required: [true, 'Phone is required'],
+        unique: true,
+    },
     email: {
         type: String,
         match: [emailRegexp, 'Invalid email format'],
