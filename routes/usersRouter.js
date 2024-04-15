@@ -1,13 +1,15 @@
 import express from "express";
 import validateBody from "../helpers/validateBody.js";
-import { registerUserSchema } from "../schemas/usersSchemas.js";
-import { registerUser } from "../controllers/usersControllers.js"
+import { registerUserSchema, loginUserSchema } from "../schemas/usersSchemas.js";
+import { registerUser, loginUser } from "../controllers/usersControllers.js"
 
 
 const usersRouter = express.Router();
 
 
 usersRouter.post("/register", validateBody(registerUserSchema), registerUser);
+
+usersRouter.post("/login", validateBody(loginUserSchema), loginUser);
 
 
 export default usersRouter;
