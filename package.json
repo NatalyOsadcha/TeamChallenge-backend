@@ -10,9 +10,10 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "Petro Brodetskyi, Ihor Voznyi",
+  "author": "Petro Brodetskyi",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^8.1.3",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
