@@ -10,6 +10,7 @@ npm install jsonwebtoken
 npm i mongoose
 npm install morgan
 npm i nanoid
+npm i @sendgrid/mail
 
 DevDependencies installation commands:
 npm i nodemon
@@ -20,7 +21,7 @@ npx nodemon server.js
 
 ============================================
 
-User registration:
+User registration & verification:
 POST to: /api/users/register
 
 example request:
