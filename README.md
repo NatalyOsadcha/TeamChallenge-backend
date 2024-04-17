@@ -65,3 +65,18 @@ response:
 POST /api/users/login 200 219 - 475.202 ms
 
 ============================================
+
+User current:
+GET to: /api/users/current
+
+example request (with token):
+{
+"email": "user@mail.com",
+"password": "userpass"
+}
+
+response:
+{
+"name": "User User",
+"email": "user@mail.com"
+}

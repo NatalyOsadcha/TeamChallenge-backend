@@ -136,3 +136,12 @@ export const loginUser = ctrlWrapper(async (req, res) => {
         }
     });
 });
+
+export const getCurrentUser = ctrlWrapper(async (req, res) => {
+    const { name, email } = req.user;
+
+    res.json({
+        name,
+        email,
+    });
+});
