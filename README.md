@@ -80,3 +80,13 @@ response:
 "name": "User User",
 "email": "user@mail.com"
 }
+
+============================================
+
+POST /api/users/logout
+example request (with token):
+
+response:
+status: 204 No content
+
+POST /api/users/logout 204 - - 48.189 ms
