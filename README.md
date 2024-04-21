@@ -83,10 +83,80 @@ response:
 
 ============================================
 
-POST /api/users/logout
+POST to /api/users/logout
+
 example request (with token):
 
 response:
 status: 204 No content
 
 POST /api/users/logout 204 - - 48.189 ms
+
+============================================
+Send to cart:
+
+POST to /api/products
+
+example request (with token):
+{
+"name": "Blackberries",
+"category": "berries",
+"price": 50,
+"quantity": 2,
+"favorite": true
+}
+
+response:
+{
+"name": "Blackberries",
+"category": "berries",
+"price": 50,
+"quantity": 2,
+"favorite": true,
+"owner": "66250435f722f54b57b684bf",
+"\_id": "662505aaf720f54b57b684c8"
+}
+
+POST /api/products 201 152 - 65.077 ms
+
+=============================================
+Send order:
+
+POST to api/orders
+
+example request (with token):
+{
+"products": [
+{
+"_id": "66253ff01bb80baefe527174",
+"quantity": 5
+},
+{
+"_id": "66253fc21bb80baefe527171",
+"quantity": 3
+}
+],
+"totalPrice": 90.99,
+"shippingAddress": "Street, 123, city, country"
+}
+
+response:
+{
+"products": [
+"66253ff01bb80baefe527174",
+"66253fc21bb80baefe527171"
+],
+"customer": {
+"\_id": "66250435f721f54b57b684bf",
+"password": "$2b$10$CkYpfGiuge2dc7C0BBK0C.WYiA1z.1fMyRq9YQwsb0VObyLb/Xm9K",
+"name": "User User",
+"phone": "+00(000)000-00-00",
+"email": "user@mail.com",
+"token": "eyJhbGciOiJIUzI1NiIsInR5cmI6IkpXVCJ9.eyJpZCI6IjY2MjKwNDM1ZjcyMWY1NGI1N2I2ODRiZiIsImlhdCI6MTcxMzcwMjAyNCwiZXhwIjoxNzEzNzg0ODI0fQ.bV0oJzkVbT6sb4SsEFbHGLzTBv_1jaySzjlpu256QBA",
+"verify": true,
+"verificationToken": null
+},
+"status": "pending",
+"\_id": "66254c324984a0e4bn7621de",
+"createdAt": "2024-04-21T17:26:10.088Z"
+}
