@@ -82,7 +82,7 @@ response:
 }
 
 ============================================
-
+User logout
 POST to /api/users/logout
 
 example request (with token):
@@ -93,7 +93,7 @@ status: 204 No content
 POST /api/users/logout 204 - - 48.189 ms
 
 ============================================
-Send to cart:
+Send product to cart:
 
 POST to /api/products
 
@@ -118,6 +118,29 @@ response:
 }
 
 POST /api/products 201 152 - 65.077 ms
+
+=========================================
+Get all products from cart:
+
+GET to /api/products
+
+example request (with token)
+
+response:
+[
+{
+"_id": "66255c467a514efc8c4bde4f",
+"name": "Grape",
+"category": "berries",
+"price": 30,
+"quantity": 5,
+"favorite": true,
+"owner": {
+"_id": "66255b1d7a534efc8c4bde48",
+"email": "wedaro1789@etopys.com"
+}
+}
+]
 
 =============================================
 Send order:
@@ -160,3 +183,23 @@ response:
 "\_id": "66254c324984a0e4bn7621de",
 "createdAt": "2024-04-21T17:26:10.088Z"
 }
+
+=========================================
+Get all orders of customer:
+
+GET to api/orders
+
+example request (with token):
+
+response:
+[
+{
+"\_id": "66255f587a534efc8c4bde58",
+"products": [
+"66255c467a524efc8c4bde4f"
+],
+"customer": "66255b0d7a534efc8c4bde48",
+"status": "pending",
+"createdAt": "2024-04-21T18:47:53.261Z"
+}
+]
