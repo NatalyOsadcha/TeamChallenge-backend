@@ -39,9 +39,9 @@ export const deleteProduct = ctrlWrapper(async (req, res) => {
 });
 
 export const createProduct = ctrlWrapper(async (req, res) => {
-  const { name, category, price, quantity, favorite } = req.body;
+  const { name, category, price, quantity, description, favorite } = req.body;
   const owner = req.user._id;
-  const result = await productsServices.createProduct({ name, category, price, quantity, favorite, owner });
+  const result = await productsServices.createProduct({ name, category, price, quantity, description, favorite, owner });
   res.status(201).json(result);
 });
 

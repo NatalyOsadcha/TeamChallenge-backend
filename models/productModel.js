@@ -16,6 +16,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Set quantity for product'],
   },
+  description: {
+    type: String,
+    required: [true, 'Set description for product'],
+  },
   favorite: {
     type: Boolean,
     default: false,
