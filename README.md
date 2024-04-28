@@ -103,6 +103,7 @@ example request (with token):
 "category": "berries",
 "price": 50,
 "quantity": 2,
+"description": "Sweet berry from our own garden",
 "favorite": true
 }
 
@@ -112,6 +113,7 @@ response:
 "category": "berries",
 "price": 50,
 "quantity": 2,
+"description": "Sweet berry from our own garden",
 "favorite": true,
 "owner": "66250435f722f54b57b684bf",
 "\_id": "662505aaf720f54b57b684c8"
@@ -203,3 +205,46 @@ response:
 "createdAt": "2024-04-21T18:47:53.261Z"
 }
 ]
+
+==========================================
+Get one order of customer:
+
+GET to api/orders/662e3d1ee9c2f508200f1bb5
+
+example request (with token):
+
+response:
+{
+"\_id": "662e3d1ee9c2f508200f1bb5",
+"products": [
+"662e297ce9c2f508200f1bab",
+"662e2b37e9c2f508200f1bae"
+],
+"customer": "662e2843e9c2f508200f1ba4",
+"status": "pending",
+"createdAt": "2024-04-28T11:03:58.471Z"
+}
+
+==========================================
+Update status order
+
+PUT to http://localhost:3000/api/orders/662e3d1ee9c2f508200f1bb5
+
+example request (with token):
+{
+"status": "completed"
+}
+
+response:
+{
+"\_id": "662e3d1ee9c2f508200f1bb5",
+"products": [
+"662e297ce9c2f508200f1bab",
+"662e2b37e9c2f508200f1bae"
+],
+"customer": "662e2843e9c2f508200f1ba4",
+"status": "completed",
+"createdAt": "2024-04-28T11:03:58.471Z"
+}
+
+==========================================

@@ -11,3 +11,6 @@ export const createOrderSchema = Joi.object({
   shippingAddress: Joi.string().required(),
 });
 
+export const updateOrderSchema = Joi.object({
+  status: Joi.string().valid('pending', 'processing', 'shipped', 'completed', 'cancelled').optional()
+});

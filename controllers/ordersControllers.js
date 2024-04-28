@@ -1,5 +1,6 @@
 import * as productsServices from "../services/productsServices.js"
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
+import { handleNotFound } from "../helpers/errorHandlers.js";
 import { createOrderSchema } from "../schemas/ordersSchemas.js";
 import * as ordersServices from "../services/ordersServices.js";
 
@@ -27,14 +28,32 @@ export const createOrder = ctrlWrapper(async (req, res) => {
   res.status(201).json(newOrder);
 });
 
-export const getAllOrders = ctrlWrapper(async (req, res) => {
+export const getUserOrders = ctrlWrapper(async (req, res) => {
   const currentUser = req.user;
+  const userOrders = await ordersServices.getUserOrders(currentUser._id);
+  res.json(userOrders);
+});
 
-  try {
-    const userOrders = await ordersServices.getUserOrders(currentUser._id);
-
-    res.json(userOrders);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+export const getOneOrder = ctrlWrapper(async (req, res) => {
+  const { id } = req.params;
+  const order = await ordersServices.getOneOrder(id);
+    
+  if (!order) {
+    return handleNotFound(req, res);
   }
+
+  res.json(order);
+});
+
+export const updateOrderStatus = ctrlWrapper(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const updatedOrder = await ordersServices.updateOrderStatus(id, status);
+  
+  if (!updatedOrder) {
+    return handleNotFound(req, res);
+  }
+
+  res.status(200).json(updatedOrder);
 });
