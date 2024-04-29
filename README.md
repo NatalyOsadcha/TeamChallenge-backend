@@ -37,7 +37,8 @@ response:
 "user": {
 "name": "User User",
 "email": "user@mail.com",
-"phone": "+00(000)000-00-00"
+"phone": "+00(000)000-00-00",
+"role": "customer"
 }
 }
 
@@ -58,7 +59,8 @@ response:
 {
 "token": "eyJhbGciOiJIUzI1NiIsInJ5cCI6IkpXVCJ9.eyJpZCI6IjY2MWQ3MWVkMmY0NDViZTQzNThiNzkzOSIsImlhnCI6MTcxMzIwNjg4NywiZXhwIjoxNzEzMjg5Njg3fQ.v6kScJqqXj-J2_kYWZUJGOeWqQbuAkovbth7wCjHMuA",
 "user": {
-"email": "user@mail.com"
+"email": "user@mail.com",
+"role": "customer"
 }
 }
 
@@ -78,7 +80,8 @@ example request (with token):
 response:
 {
 "name": "User User",
-"email": "user@mail.com"
+"email": "user@mail.com",
+"role": "customer"
 }
 
 ============================================

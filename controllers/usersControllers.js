@@ -48,6 +48,7 @@ export const registerUser = ctrlWrapper(async (req, res) => {
             name: newUser.name,
             email: newUser.email,
             phone: newUser.phone,
+            role: newUser.role,
         }
     });
 });
@@ -133,16 +134,18 @@ export const loginUser = ctrlWrapper(async (req, res) => {
         token,
         user: {
             email: existingUser.email,
+            role: existingUser.role,
         }
     });
 });
 
 export const getCurrentUser = ctrlWrapper(async (req, res) => {
-    const { name, email } = req.user;
+    const { name, email, role } = req.user;
 
     res.json({
         name,
         email,
+        role,
     });
 });
 
