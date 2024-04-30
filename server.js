@@ -4,15 +4,16 @@ import app from "./app.js"
 mongoose.Promise = global.Promise;
 
 const { DB_HOST } = process.env;
-const port = 3000;
+const { PORT } = process.env;
 
 mongoose.connect(DB_HOST)
     .then(() => {
-        app.listen(port);
-        console.log("Server started on port: 3000");
+        app.listen(PORT);
+        console.log(`Server started on port: ${PORT}`);
         console.log("Database connection successful");
     })
     .catch(error => {
         console.log("Database connection error:", error.message);
         process.exit(1);
     });
+
