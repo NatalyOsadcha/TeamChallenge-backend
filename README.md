@@ -11,6 +11,7 @@ npm i mongoose
 npm install morgan
 npm i nanoid
 npm i @sendgrid/mail
+npm install cookie-parser
 
 DevDependencies installation commands:
 npm i nodemon
