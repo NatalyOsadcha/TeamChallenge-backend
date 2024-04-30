@@ -41,8 +41,22 @@ export const deleteProduct = ctrlWrapper(async (req, res) => {
 export const createProduct = ctrlWrapper(async (req, res) => {
   const { name, category, price, quantity, description, favorite } = req.body;
   const owner = req.user._id;
-  const result = await productsServices.createProduct({ name, category, price, quantity, description, favorite, owner });
-  res.status(201).json(result);
+
+  try {
+    const existingProduct = await productsServices.getProductByOwnerAndName(owner, name, category);
+
+    if (existingProduct) {
+      const updatedQuantity = existingProduct.quantity + quantity;
+      const updatedProduct = await productsServices.updateProductQuantity(existingProduct._id, updatedQuantity);
+      
+      res.status(200).json(updatedProduct);
+    } else {
+      const result = await productsServices.createProduct({ name, category, price, quantity, description, favorite, owner });
+      res.status(201).json(result);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 export const updateProduct = ctrlWrapper(async (req, res) => {
@@ -70,6 +84,12 @@ export const updateProduct = ctrlWrapper(async (req, res) => {
 
   res.status(200).json(updatedProduct);
 });
+
+// export const updateProductQuantity = async (productId, newQuantity) => {
+//   const product = await Product.findByIdAndUpdate(productId, { quantity: newQuantity }, { new: true });
+//   const updatedPrice = product.price * newQuantity;
+//   return { product, updatedPrice };
+// };
 
 export const updateStatusProduct = ctrlWrapper(async (req, res) => {
   const { id } = req.params;
