@@ -8,7 +8,6 @@ import { registerUserSchema, loginUserSchema } from "../schemas/usersSchemas.js"
 import { nanoid } from "nanoid";
 import jwt from "jsonwebtoken";
 
-
 const { SECRET_KEY, BASE_URL } = process.env;
 
 export const registerUser = ctrlWrapper(async (req, res) => {
@@ -18,7 +17,6 @@ export const registerUser = ctrlWrapper(async (req, res) => {
         return;
     }
     const { name, email, phone, password } = req.body;
-
 
     const existingUser = await userServices.findUser({ email });
     if (existingUser) {
@@ -61,7 +59,7 @@ export const verifyEmail = ctrlWrapper(async (req, res) => {
         throw HttpError(404, "Email not found");
     }
 
-    await User.findByIdAndUpdate(user._id, {verify: true, verificationToken: null})
+    await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: null });
 
     res.status(200).json({ message: "Email successfully verified" });
 });
@@ -83,23 +81,17 @@ export const resendVerifyEmail = ctrlWrapper(async (req, res) => {
         throw HttpError(400, "Verification has already been passed");
     }
 
-    if (user.verifiedEmailSent) {
-        throw HttpError(400, "Verification email already sent");
-    }
-
     const verifyEmail = {
         to: email, subject: "Verify email",
         html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${user.verificationToken}">Click verify email</a>`
     };
 
     await sendEmail(verifyEmail);
-    await User.findByIdAndUpdate(user._id, {verify: true, verifiedEmailSent: true })
 
     res.status(200).json({ message: "Verification email sent" });
 });
 
 export const loginUser = ctrlWrapper(async (req, res) => {
-
     const { error } = loginUserSchema.validate(req.body);
     if (error) {
         res.status(401).json({ message: error.message });

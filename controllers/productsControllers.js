@@ -1,4 +1,5 @@
 import * as productsServices from "../services/productsServices.js"
+import * as catalogsServises from "../services/catalogsServises.js"
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import { updateProductSchema } from "../schemas/productsSchemas.js";
 import { handleNotFound } from "../helpers/errorHandlers.js";
@@ -39,7 +40,7 @@ export const deleteProduct = ctrlWrapper(async (req, res) => {
 });
 
 export const createProduct = ctrlWrapper(async (req, res) => {
-  const { name, category, price, quantity, description, favorite } = req.body;
+  const { name, category, price, quantity, description, imageUrl, favorite } = req.body;
   const owner = req.user._id;
 
   try {
@@ -51,7 +52,27 @@ export const createProduct = ctrlWrapper(async (req, res) => {
       
       res.status(200).json(updatedProduct);
     } else {
-      const result = await productsServices.createProduct({ name, category, price, quantity, description, favorite, owner });
+      const result = await productsServices.createProduct({ name, category, price, quantity, description, imageUrl, favorite, owner });
+      res.status(201).json(result);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+export const createBaseProduct = ctrlWrapper(async (req, res) => {
+  const { name, category, price, quantity, description, imageUrl, favorite } = req.body;
+  const owner = req.user._id;
+
+  try {
+    const existingProduct = await catalogsServises.getBaseProductByOwnerAndName(owner, name, category);
+
+    if (existingProduct) {
+      const updatedQuantity = existingProduct.quantity + quantity;
+      const updatedProduct = await catalogsServises.updateBaseProductQuantity(existingProduct._id, updatedQuantity);
+      res.status(200).json(updatedProduct);
+    } else {
+      const result = await catalogsServises.createBaseProduct({ name, category, price, quantity, description, imageUrl, favorite, owner });
       res.status(201).json(result);
     }
   } catch (error) {
