@@ -1,4 +1,4 @@
-import Product from "../models/productModel.js";
+import Product from "../models/productCartModel.js";
 
 export const getAllProducts = (owner, options) => Product.find({ owner }).skip((options.page - 1) * options.limit).limit(options.limit);
 

@@ -1,5 +1,5 @@
-import * as productsServices from "../services/productsServices.js"
-import * as catalogsServises from "../services/catalogsServises.js"
+import * as productsCartServices from "../services/productsCartServices.js"
+import * as productsBaseServises from "../services/productsBaseServises.js"
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import { updateProductSchema } from "../schemas/productsSchemas.js";
 import { handleNotFound } from "../helpers/errorHandlers.js";
@@ -14,7 +14,7 @@ export const getAllProducts = ctrlWrapper(async (req, res) => {
     limit: parseInt(limit, 10)
   };
 
-  const products = await productsServices.getAllProducts(currentUser._id, options).populate("owner", "email");
+  const products = await productsCartServices.getAllProducts(currentUser._id, options).populate("owner", "email");
     
   res.json(products);
 });
@@ -22,7 +22,7 @@ export const getAllProducts = ctrlWrapper(async (req, res) => {
 export const getOneProduct = ctrlWrapper(async (req, res) => {
   const { id } = req.params;
   const { _id: owner } = req.user;
-  const oneProduct = await productsServices.getOneProduct(id, owner);
+  const oneProduct = await productsCartServices.getOneProduct(id, owner);
   if (!oneProduct) {
     return handleNotFound(req, res);
   }
@@ -32,7 +32,7 @@ export const getOneProduct = ctrlWrapper(async (req, res) => {
 export const deleteProduct = ctrlWrapper(async (req, res) => {
   const { id } = req.params;
   const { _id: owner } = req.user;
-  const deletedProduct = await productsServices.deleteProduct(id, owner);
+  const deletedProduct = await productsCartServices.deleteProduct(id, owner);
   if (!deletedProduct) {
     return handleNotFound(req, res);
   }
@@ -44,15 +44,15 @@ export const createProduct = ctrlWrapper(async (req, res) => {
   const owner = req.user._id;
 
   try {
-    const existingProduct = await productsServices.getProductByOwnerAndName(owner, name, category);
+    const existingProduct = await productsCartServices.getProductByOwnerAndName(owner, name, category);
 
     if (existingProduct) {
       const updatedQuantity = existingProduct.quantity + quantity;
-      const updatedProduct = await productsServices.updateProductQuantity(existingProduct._id, updatedQuantity);
+      const updatedProduct = await productsCartServices.updateProductQuantity(existingProduct._id, updatedQuantity);
       
       res.status(200).json(updatedProduct);
     } else {
-      const result = await productsServices.createProduct({ name, category, price, quantity, description, imageUrl, favorite, owner });
+      const result = await productsCartServices.createProduct({ name, category, price, quantity, description, imageUrl, favorite, owner });
       res.status(201).json(result);
     }
   } catch (error) {
@@ -65,14 +65,14 @@ export const createBaseProduct = ctrlWrapper(async (req, res) => {
   const owner = req.user._id;
 
   try {
-    const existingProduct = await catalogsServises.getBaseProductByOwnerAndName(owner, name, category);
+    const existingProduct = await productsBaseServises.getBaseProductByOwnerAndName(owner, name, category);
 
     if (existingProduct) {
       const updatedQuantity = existingProduct.quantity + quantity;
-      const updatedProduct = await catalogsServises.updateBaseProductQuantity(existingProduct._id, updatedQuantity);
+      const updatedProduct = await productsBaseServises.updateBaseProductQuantity(existingProduct._id, updatedQuantity);
       res.status(200).json(updatedProduct);
     } else {
-      const result = await catalogsServises.createBaseProduct({ name, category, price, quantity, description, imageUrl, favorite, owner });
+      const result = await productsBaseServises.createBaseProduct({ name, category, price, quantity, description, imageUrl, favorite, owner });
       res.status(201).json(result);
     }
   } catch (error) {
@@ -86,7 +86,7 @@ export const updateProduct = ctrlWrapper(async (req, res) => {
   const { _id: owner } = req.user;
   const options = { new: true };
 
-  const existingProduct = await productsServices.updateProduct(id, body, owner);
+  const existingProduct = await productsCartServices.updateProduct(id, body, owner);
   if (!existingProduct) {
     return handleNotFound(req, res);
   }
@@ -101,7 +101,7 @@ export const updateProduct = ctrlWrapper(async (req, res) => {
     return res.status(400).json({ message: "Body must have at least one field" });
   }
 
-  const updatedProduct = await productsServices.updateProduct(id, body, owner, options);
+  const updatedProduct = await productsCartServices.updateProduct(id, body, owner, options);
 
   res.status(200).json(updatedProduct);
 });
@@ -118,7 +118,7 @@ export const updateStatusProduct = ctrlWrapper(async (req, res) => {
   const { _id: owner } = req.user;
   const options = { new: true };
 
-  const updatedFavorite = await productsServices.updateStatusProduct(
+  const updatedFavorite = await productsCartServices.updateStatusProduct(
     id,
     { favorite },
     owner,

@@ -1,4 +1,4 @@
-import * as productsServices from "../services/productsServices.js"
+import * as productsCartServices from "../services/productsCartServices.js"
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import { handleNotFound } from "../helpers/errorHandlers.js";
 import { createOrderSchema } from "../schemas/ordersSchemas.js";
@@ -19,7 +19,7 @@ export const createOrder = ctrlWrapper(async (req, res) => {
 
   try {
     for (const product of products) {
-      await productsServices.deleteProduct(product._id, customer._id);
+      await productsCartServices.deleteProduct(product._id, customer._id);
     }
   } catch (error) {
     return res.status(500).json({ message: "Failed to clear shopping cart" });

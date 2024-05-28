@@ -1,4 +1,4 @@
-import BaseProduct from "../models/catalogModel.js";
+import BaseProduct from "../models/productBaseModel.js";
 
 export const createBaseProduct = (catalogData) => BaseProduct.create(catalogData);
 

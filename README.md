@@ -99,7 +99,7 @@ POST /api/users/logout 204 - - 48.189 ms
 ============================================
 Send product to cart:
 
-POST to /api/products
+POST to /api/carts
 
 example request (with token):
 {
@@ -123,12 +123,12 @@ response:
 "\_id": "662505aaf720f54b57b684c8"
 }
 
-POST /api/products 201 152 - 65.077 ms
+POST /api/carts 201 152 - 65.077 ms
 
 =========================================
 Get all products from cart:
 
-GET to /api/products
+GET to /api/carts
 
 example request (with token)
 
